@@ -50,6 +50,7 @@ public class BenfordsLaw{
         // Open File
         String fileName = "sales.csv";
         String line = "";
+        int total = 0;
         int[] counters = new int[10];
 
         // Loading the file into the program
@@ -74,12 +75,19 @@ public class BenfordsLaw{
         } catch (IOException e){
             e.printStackTrace();
         }
-        reportResults(counters);
+
+        reportResults(total, counters);
     }
 
-    public static void reportResults(int[] counters){
+    public static void reportResults(int total, int[] counters){
         for(int i = 0; i <= 9; i++){
+            total += counters[i];
+        }
+
+        for(int i = 0; i <= 9; i++){
+            double frequency = (counters[i]*100) / total;
             System.out.println("The distribution of first digit " + i + " is " + counters[i]);
+            System.out.println("The distribution of first digit " + i + " is approximately " + frequency + " percent.");
         }
     }
 }
