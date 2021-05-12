@@ -5,10 +5,11 @@
  * Description:
 */
 
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class BenfordsLaw{
     public static void main(String[] args) throws FileNotFoundException
@@ -27,7 +28,12 @@ public class BenfordsLaw{
             if (userInput.equals(reportSalesOption)){
                 loadFile();
             }
-            
+            else if (userInput.equals(checkFraudOption)){
+
+            }
+            else{
+                System.out.println("Please type in a valid option.");
+            }
         }while (!userInput.equals(exitCondition));
 
         customer.close();
@@ -44,24 +50,25 @@ public class BenfordsLaw{
     public static void loadFile() throws FileNotFoundException{
         // Open File
         String fileName = "sales.csv";
+        String line = "";
         // Loading the file into the program
-        File saleFile = new File(fileName);
+        FileReader saleFile = new FileReader(fileName);
         
-        // Read the file by creating Scanner instance to read the file in the java
-        Scanner reader = new Scanner(saleFile);
-        // Sets the delimiter pattern
-        reader.useDelimiter(",");
-        // Create and initialize an arraylist to store the sales num
-        ArrayList<String> salesArr = new ArrayList<String>();
         
-        while (reader.hasNext())
-        {
-            salesArr.add(reader.next());
+        try {
+          // Read the file by creating Scanner instance to read the file in the java
+            BufferedReader br = new BufferedReader(saleFile);  
+            while((line = br.readLine()) != null){
+                String[] dataCollection = line.split(",");
+                System.out.println("postal code: " + dataCollection[0]);
+                System.out.println("sales: " + dataCollection[1]);
+            }
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
         }
-
-        System.out.println(salesArr);
-        System.out.println();
-        reader.close();
+        System.out.println(dataCollection[0]);
     }
         
 }
