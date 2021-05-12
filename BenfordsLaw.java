@@ -62,8 +62,9 @@ public class BenfordsLaw{
             while((line = br.readLine()) != null){
                 String[] dataCollection = line.split(",");
                 if(userInput.equals("3")){
-                    System.out.println("postal code: " + dataCollection[0]);
+                    /*System.out.println("postal code: " + dataCollection[0]);
                     System.out.println("sales: " + dataCollection[1]);
+                    */
                 }
                 for(int i = 1; i <= 9; i++){
                     if (Character.getNumericValue(dataCollection[1].charAt(0)) == i){
@@ -83,14 +84,23 @@ public class BenfordsLaw{
 
     public static void reportResults(int[] counters){
         int total = 0;
+        double[] frequency = new double[10];
+        
         for(int i = 1; i <= 9; i++){
             total += counters[i];
         }
 
         for(int i = 1; i <= 9; i++){
-            double frequency = (counters[i]*100) / total;
+            frequency[i] = (counters[i]*100) / total;
             System.out.println("The distribution of first digit " + i + " is " + counters[i]);
             System.out.println("The distribution of first digit " + i + " is approximately " + frequency + " percent.");
+        }
+
+        if((frequency[1] > 29.0) && (frequency[1] < 32.0)){
+            System.out.println("The data indicates that fraud likely did not occur.");
+        }
+        else{
+            System.out.println("The data indicates that fraud is highly likely to have occurred.");
         }
     }
 }
