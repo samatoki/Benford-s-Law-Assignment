@@ -12,8 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class BenfordsLaw{
-    public static void main(String[] args) throws FileNotFoundException
-    {
+    public static void main(String[] args) throws FileNotFoundException{
         // Initialize variables
         Scanner customer = new Scanner(System.in);
         String userInput, reportSalesOption, checkFraudOption, exitCondition;
@@ -51,24 +50,43 @@ public class BenfordsLaw{
         // Open File
         String fileName = "sales.csv";
         String line = "";
+        String data;
+        int[] counters = new int[10];
+
         // Loading the file into the program
         FileReader saleFile = new FileReader(fileName);
-        
         
         try {
           // Read the file by creating Scanner instance to read the file in the java
             BufferedReader br = new BufferedReader(saleFile);  
             while((line = br.readLine()) != null){
                 String[] dataCollection = line.split(",");
-                System.out.println("postal code: " + dataCollection[0]);
+                /*System.out.println("postal code: " + dataCollection[0]);
                 System.out.println("sales: " + dataCollection[1]);
+                */
+                data = dataCollection[1];
+                countDistribution(data, counters);
             }
         } catch (FileNotFoundException e){
             e.printStackTrace();
         } catch (IOException e){
             e.printStackTrace();
         }
-        System.out.println(dataCollection[0]);
+        reportResults(counters);  
     }
-        
+    
+    public static void countDistribution(String data, int[] counters){
+        for(int i = 0; i <= 9; i++){
+            if (Character.getNumericValue(data.charAt(0)) == i){
+                counters[i] += 1;
+            }
+        }
+    }
+
+    public static void reportResults(int[] counters){
+        for(int i = 0; i <= 9; i++){
+            System.out.println("The distribution of first digit " + i + " is " + counters[i]);
+        }
+    }
 }
+        
