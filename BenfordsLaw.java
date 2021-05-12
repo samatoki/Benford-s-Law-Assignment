@@ -50,7 +50,6 @@ public class BenfordsLaw{
         // Open File
         String fileName = "sales.csv";
         String line = "";
-        String data;
         int[] counters = new int[10];
 
         // Loading the file into the program
@@ -64,23 +63,18 @@ public class BenfordsLaw{
                 /*System.out.println("postal code: " + dataCollection[0]);
                 System.out.println("sales: " + dataCollection[1]);
                 */
-                data = dataCollection[1];
-                countDistribution(data, counters);
+                for(int i = 0; i <= 9; i++){
+                    if (Character.getNumericValue(dataCollection[1].charAt(0)) == i){
+                        counters[i] += 1;
+                    }
+                }
             }
         } catch (FileNotFoundException e){
             e.printStackTrace();
         } catch (IOException e){
             e.printStackTrace();
         }
-        reportResults(counters);  
-    }
-    
-    public static void countDistribution(String data, int[] counters){
-        for(int i = 0; i <= 9; i++){
-            if (Character.getNumericValue(data.charAt(0)) == i){
-                counters[i] += 1;
-            }
-        }
+        reportResults(counters);
     }
 
     public static void reportResults(int[] counters){
