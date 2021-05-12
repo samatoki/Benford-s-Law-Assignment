@@ -36,6 +36,7 @@ public class BenfordsLaw{
         }while (!userInput.equals(exitCondition));
 
         customer.close();
+        System.out.println("Program Terminated.");
     }
 
     public static void printMenu(){
