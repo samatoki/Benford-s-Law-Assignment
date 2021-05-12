@@ -25,10 +25,10 @@ public class BenfordsLaw{
             userInput = customer.nextLine();
             
             if (userInput.equals(reportSalesOption)){
-                loadFile();
+                loadFile(userInput);
             }
             else if (userInput.equals(checkFraudOption)){
-                
+                loadFile(userInput);
             }
             else{
                 System.out.println("Please type in a valid option.");
@@ -46,8 +46,8 @@ public class BenfordsLaw{
         .concat("9. Quit\n")
         );
     }
-    
-    public static void loadFile() throws FileNotFoundException{
+
+    public static void loadFile(String userInput) throws FileNotFoundException{
         // Open File
         String fileName = "sales.csv";
         String line = "";
@@ -61,8 +61,10 @@ public class BenfordsLaw{
             BufferedReader br = new BufferedReader(saleFile);  
             while((line = br.readLine()) != null){
                 String[] dataCollection = line.split(",");
-                System.out.println("postal code: " + dataCollection[0]);
-                System.out.println("sales: " + dataCollection[1]);
+                if(userInput.equals("3")){
+                    System.out.println("postal code: " + dataCollection[0]);
+                    System.out.println("sales: " + dataCollection[1]);
+                }
                 for(int i = 1; i <= 9; i++){
                     if (Character.getNumericValue(dataCollection[1].charAt(0)) == i){
                         counters[i] += 1;
@@ -74,8 +76,9 @@ public class BenfordsLaw{
         } catch (IOException e){
             e.printStackTrace();
         }
-            
-        reportResults(counters);
+        if(userInput.equals("4")){
+            reportResults(counters);
+        }
     }
 
     public static void reportResults(int[] counters){
