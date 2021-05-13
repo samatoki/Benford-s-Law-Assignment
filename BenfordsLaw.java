@@ -14,6 +14,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -125,7 +128,7 @@ public class BenfordsLaw{
             saveRecord(frequency, filepath);
         }
         else if(reportCheck.equals("c")){
-
+            reportResults(frequency);
         }
     }
 
@@ -154,7 +157,9 @@ public class BenfordsLaw{
     }
 
     public static void reportResults(double[] frequency){
+        // Initialize the Stage
         Stage stage = new Stage();
+
         // Creating X and Y axes
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -169,22 +174,46 @@ public class BenfordsLaw{
 
         // Preparing data for the bar chart
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
-        series1.setName("1 = " + 31.0);
-        series1.getData().add(new XYChart.Data<>("1", 31.0));
+        series1.setName("1 = " + frequency[1]);
+        series1.getData().add(new XYChart.Data<>("1", frequency[1]));
 
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
-        series1.setName("2 = " + 13.0);
-        series1.getData().add(new XYChart.Data<>("2", 13.0));
+        series1.setName("2 = " + frequency[2]);
+        series1.getData().add(new XYChart.Data<>("2", frequency[2]));
 
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();
-        series1.setName("3 = " + 12.0);
-        series1.getData().add(new XYChart.Data<>("3", 12.0));
+        series1.setName("3 = " + frequency[3]);
+        series1.getData().add(new XYChart.Data<>("3", frequency[3]));
+
+        XYChart.Series<String, Number> series4 = new XYChart.Series<>();
+        series1.setName("4 = " + frequency[4]);
+        series1.getData().add(new XYChart.Data<>("4", frequency[4]));
+
+        XYChart.Series<String, Number> series5 = new XYChart.Series<>();
+        series1.setName("5 = " + frequency[5]);
+        series1.getData().add(new XYChart.Data<>("5", frequency[5]));
+
+        XYChart.Series<String, Number> series6 = new XYChart.Series<>();
+        series1.setName("6 = " + frequency[6]);
+        series1.getData().add(new XYChart.Data<>("6", frequency[6]));
+
+        XYChart.Series<String, Number> series7 = new XYChart.Series<>();
+        series1.setName("7 = " + frequency[7]);
+        series1.getData().add(new XYChart.Data<>("7", frequency[7]));
+
+        XYChart.Series<String, Number> series8 = new XYChart.Series<>();
+        series1.setName("8 = " + frequency[8]);
+        series1.getData().add(new XYChart.Data<>("8", frequency[8]));
+
+        XYChart.Series<String, Number> series9 = new XYChart.Series<>();
+        series1.setName("9 = " + frequency[9]);
+        series1.getData().add(new XYChart.Data<>("9", frequency[9]));
 
         // Setting the data to bar chart
-        firstDigitDistribution.getData().addAll(series1, series2, series3);
+        firstDigitDistribution.getData().addAll(series1, series2, series3, series4, series5, series6, series7, series8, series9);
 
         // Creating a Group object
-        javafx.scene.Group root = new javafx.scene.Group(firstDigitDistribution);
+        Group root = new Group(firstDigitDistribution);
 
         // Creating a stack pane to hold the chart
         StackPane pane = new StackPane(firstDigitDistribution);
