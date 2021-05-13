@@ -119,7 +119,7 @@ public class BenfordsLaw{
         }
 
         System.out.println("To check the result file, enter 'f'\n"
-            .concat("To check the frequency chart, enter 'c'\n")
+        .concat("To check the frequency chart, enter 'c'")
         );
         String reportCheck = choice.nextLine();
         if(reportCheck.equals("f")){
@@ -129,7 +129,6 @@ public class BenfordsLaw{
         else if(reportCheck.equals("c")){
             reportResults(frequency);
         }
-        
     }
 
     public static void saveRecord(double[] frequency, String filepath){
