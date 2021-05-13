@@ -131,59 +131,76 @@ public class BenfordsLaw{
      * @return - result for possible accounting fraud check
      * */
     public static void fraudCheck(int[] counters){
-        int total = 0;
-        double[] frequency = new double[10];
-        Scanner choice = new Scanner(System.in);
+        int total = 0; // set the total to 0 first
+        double[] frequency = new double[10]; // initlized double array "frequency"
+        Scanner choice = new Scanner(System.in); // initlized scanner
 
+        // for loop calcuates the total of the number exists in sales.csv file
         for(int i = 1; i <= 9; i++){
             total += counters[i];
         }
-        
+        // for loop calculates the percentage by *100 of each amount of digits and divide by total
+        // store in a "frequency" double array
         for(int i = 1; i <= 9; i++){
             frequency[i] = (counters[i]*100) / total;
         }
 
+        //IF CONDITION: if the frequency of the "1" digits is between 29% or 32% the program will say the fraud did not occur 
         if((frequency[1] > 29.0) && (frequency[1] < 32.0)){
             System.out.println("The data indicates that fraud likely did not occur.");
         }
+        // ELSE CONDITION: if the frequency of the "1" digits is less or higher than 29% or 32% the program will say the fraud happens 
         else{
             System.out.println("The data indicates that fraud is highly likely to have occurred.");
         }
 
+        // prompt user that table or graph which one did they want to view first
         System.out.println("To check the result file, enter 'f'\n"
         .concat("To check the frequency chart, enter 'c'")
         );
+        // answer store in reportCheck
         String reportCheck = choice.nextLine();
-        if(reportCheck.equals("f")){
-            String filepath = "results.csv";
+        // IF CONDITION: if the user input "f" the program will input this variable into method called saveRecord inorder to write the results in the results.csv files
+        // ***************NOTE THAT YOU MUST NEED TO OPEN  results.csv file IN ANOTHER TAB IN VSCODE AND IT UPDATES EACHTIME IT RUNS**********************
+
+        if(reportCheck.equals("f")){ 
+            String filepath = "results.csv"; 
             saveRecord(frequency, filepath);
         }
-        else if(reportCheck.equals("c")){
+        else if(reportCheck.equals("c")){ // ELSE CONDITION: if the user input "c" than the method reportResults get the param of frequency and than printout the chart
+        // USER can only view one of them each time the loop
             reportResults(frequency);
         }
     }
-
+    /*
+     * Write the results of the number frequency into the file called "results.csv" 
+     * 
+     * @param double array from the methods above "fraudCheck".
+     * @return "Record saved" if the program success saved into the file
+     * @Return "Record not saved" if the program fail to save into the file
+     */
     public static void saveRecord(double[] frequency, String filepath){
-        String percentage = "%";
-        String num = "Number";
+        String percentage = "%"; // set percentage to "%" 
+        String num = "Number"; // set num to "Number"
         
         try{
-            FileWriter fw = new FileWriter(filepath, false);
-            BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter pw = new PrintWriter(bw);
+            FileWriter fw = new FileWriter(filepath, false); // initlized the FileWriter and lets the it overwrite the results.csv each time
+            BufferedWriter bw = new BufferedWriter(fw); // BufferedWriter initlized 
+            PrintWriter pw = new PrintWriter(bw); //PrintWriter initlized
             
-            pw.println(num + " | " + percentage);
+            pw.println(num + " | " + percentage); // print this line "Number" + " | " + "%" into  the file.
             
+            // for loop to repeat for a number of frequency.length time(9) 
             for(int i = 1; i < frequency.length; i++){
-                pw.println(i + " | " + frequency[i]);
+                pw.println(i + " | " + frequency[i]); // "i" goes into number column and "frequency" goes into "%" column each loop 
             }
            
-            pw.flush();
-            pw.close();
+            pw.flush(); //flush the PrintWriter
+            pw.close(); // close the printwriter
 
-            JOptionPane.showMessageDialog(null, " Record Saved");
+            JOptionPane.showMessageDialog(null, " Record Saved"); // Package JOptionPane will show a message buttom to screen "Record saved " when success
         }catch(Exception E){
-            JOptionPane.showMessageDialog(null, " Record not Saved");
+            JOptionPane.showMessageDialog(null, " Record not Saved"); // "Record not saved "buttom show if fails.
         }
     }
 
