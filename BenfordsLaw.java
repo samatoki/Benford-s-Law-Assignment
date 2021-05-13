@@ -6,12 +6,18 @@
 */
 
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
+
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
-public class BenfordsLaw{
+public class Law{
     public static void main(String[] args) throws FileNotFoundException{
         // Initialize variables
         Scanner customer = new Scanner(System.in);
@@ -54,6 +60,7 @@ public class BenfordsLaw{
         String fileName = sc.nextLine();
 
         String line = "";
+        
         int[] counters = new int[10];
 
         // Loading the file into the program
@@ -74,6 +81,8 @@ public class BenfordsLaw{
                     }
                 }
             }
+
+            
         } catch (FileNotFoundException e){
             e.printStackTrace();
         } catch (IOException e){
@@ -105,10 +114,32 @@ public class BenfordsLaw{
             System.out.println("The data indicates that fraud is highly likely to have occurred.");
         }
 
-        reportResults(frequency);
+        String filepath = "results.csv";
+        saveRecord(frequency, filepath);
+        
     }
 
-    public static void reportResults(double[] frequency){
+    public static void saveRecord(double[] frequency, String filepath){
+        String percentage = "%";
+        String num = "Number";
+        
+        try{
+            FileWriter fw = new FileWriter(filepath, false);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+            
+            pw.println(num + " | " + percentage);
+            
+            for(int i = 1; i < frequency.length; i++){
+                pw.println(i + " | " + frequency[i]);
+            }
+           
+            pw.flush();
+            pw.close();
 
+            JOptionPane.showMessageDialog(null, " Record Saved");
+        }catch(Exception E){
+            JOptionPane.showMessageDialog(null, " Record not Saved");
+        }
     }
 }
