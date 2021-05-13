@@ -77,7 +77,7 @@ public class BenfordsLaw{
     public static void loadFile(String userInput) throws FileNotFoundException{
         // Open File
         Scanner sc = new Scanner(System.in);
-        System.out.println("Type (sales.csv) file in order to import it:");
+        System.out.println("Type the name of sales data file (Ex: sales.csv) in order to import it:");
         String fileName = sc.nextLine();
 
         // Initialize a variable used to read the file line by line
