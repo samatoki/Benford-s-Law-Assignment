@@ -34,6 +34,7 @@ public class BenfordsLaw{
         checkFraudOption = "4";
         exitCondition = "9";
 
+        // Allow users to reinput and choose between options provided
         do{
             printMenu();
             userInput = customer.nextLine();
@@ -53,6 +54,11 @@ public class BenfordsLaw{
         System.out.println("Program Terminated.");
     }
 
+    /*
+     * Description: Print out the main menu
+     * 
+     * @return - list of options
+     * */
     public static void printMenu(){
         System.out.println("Customer and Sales System\n"
         .concat("3. Report on total Sales\n")
@@ -61,27 +67,44 @@ public class BenfordsLaw{
         );
     }
 
+    /*
+     * Description: Load chosen file into the system
+     *              & Output every single piece of info to read
+     * 
+     * @param userInput - a string used to determine whether to simply print the data or analysis it
+     * @return - print the whole file in the terminal, in the form of "Postal Code: \n" + "sales: "
+     * */
     public static void loadFile(String userInput) throws FileNotFoundException{
         // Open File
         Scanner sc = new Scanner(System.in);
         System.out.println("Type in the name of the file to read from:");
         String fileName = sc.nextLine();
+
+        // Initialize a variable used to read the file line by line
         String line = "";
         
+        // Initialize an int array to store the # of first digits (find the distribution of first digit of sales)
         int[] counters = new int[10];
 
         // Loading the file into the program
         FileReader saleFile = new FileReader(fileName);
         
         try {
-          // Read the file by creating Scanner instance to read the file in the java
-            BufferedReader br = new BufferedReader(saleFile);  
+            // Read the file by creating Scanner instance to read the file in the java
+            BufferedReader br = new BufferedReader(saleFile);
+
+            // If there are characters in the next line, the loop will continue on
             while((line = br.readLine()) != null){
+                // Use .split to separate postal codes & sales
                 String[] dataCollection = line.split(",");
+
+                // Print postal codes & sales line by line
                 if(userInput.equals("3")){
                     System.out.println("postal code: " + dataCollection[0]);
                     System.out.println("sales: " + dataCollection[1]);
                 }
+
+                // Calculate the number of first digits (1-9) and store them into counters[] array
                 for(int i = 1; i <= 9; i++){
                     if (Character.getNumericValue(dataCollection[1].charAt(0)) == i){
                         counters[i] += 1;
@@ -93,12 +116,20 @@ public class BenfordsLaw{
             e.printStackTrace();
         } catch (IOException e){
             e.printStackTrace();
-        }
+        }   // catch any errors
+
+        // Call the fraudCheck mehtod to validate the sales
         if(userInput.equals("4")){
             fraudCheck(counters);
         }
     }
 
+    /*
+     * Description: Calculate each digits' frequency and validate the sales data
+     * 
+     * @param counters - an int array that stores the num of first digits (1-9)
+     * @return - result for possible accounting fraud check
+     * */
     public static void fraudCheck(int[] counters){
         int total = 0;
         double[] frequency = new double[10];
@@ -156,6 +187,12 @@ public class BenfordsLaw{
         }
     }
 
+    /*
+     * Description: Print a bar chart to visualize the distribution of first digits
+     * 
+     * @param frequency - an double array that stores the percentage of each first digit (1-9)
+     * @return - a bar chart which shows first digits distribution
+     * */
     public static void reportResults(double[] frequency){
         // Initialize the Stage
         Stage stage = new Stage();
