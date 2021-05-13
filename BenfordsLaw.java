@@ -14,15 +14,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.stage.Stage;
-import javafx.geometry.Side;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 public class BenfordsLaw{
     public static void main(String[] args) throws FileNotFoundException{
@@ -127,7 +125,7 @@ public class BenfordsLaw{
             saveRecord(frequency, filepath);
         }
         else if(reportCheck.equals("c")){
-            reportResults(frequency);
+
         }
     }
 
@@ -156,7 +154,7 @@ public class BenfordsLaw{
     }
 
     public static void reportResults(double[] frequency){
-        Stage stage = null;
+        Stage stage = new Stage();
         // Creating X and Y axes
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -166,29 +164,35 @@ public class BenfordsLaw{
         yAxis.setLabel("Percent(%)");
 
         // Creating a Bar Chart
-        BarChart firstDigitDistribution = new BarChart<>(xAxis, yAxis);
+        BarChart<String, Number> firstDigitDistribution = new BarChart<>(xAxis, yAxis);
+        firstDigitDistribution.setTitle("Distribution of First Digit");
 
         // Preparing data for the bar chart
-        XYChart.Series[] series = new XYChart.Series[10];
-        for(int i = 1; i <= frequency.length; i++){
-            series[i].setName("1 = " + frequency[1]);
-            series[i].getData().add(new XYChart.Data(i, frequency[1]));
-        }
-        
-        // Setting the data to bar chart
-        firstDigitDistribution.getData().addAll(series[1], series[2], series[3], series[4], series[5], series[6], series[7], series[8], series[9]);
+        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+        series1.setName("1 = " + 31.0);
+        series1.getData().add(new XYChart.Data<>("1", 31.0));
 
-        // Setting the legend on the top
-        firstDigitDistribution.setLegendSide(Side.RIGHT);
+        XYChart.Series<String, Number> series2 = new XYChart.Series<>();
+        series1.setName("2 = " + 13.0);
+        series1.getData().add(new XYChart.Data<>("2", 13.0));
+
+        XYChart.Series<String, Number> series3 = new XYChart.Series<>();
+        series1.setName("3 = " + 12.0);
+        series1.getData().add(new XYChart.Data<>("3", 12.0));
+
+        // Setting the data to bar chart
+        firstDigitDistribution.getData().addAll(series1, series2, series3);
+
+        // Creating a Group object
+        javafx.scene.Group root = new javafx.scene.Group(firstDigitDistribution);
 
         // Creating a stack pane to hold the chart
         StackPane pane = new StackPane(firstDigitDistribution);
 
-        //Setting the Scene
-        Scene scene = new Scene(pane, 595, 300);
+        //Setting the scene
+        Scene scene = new Scene(pane, 600, 400);
         stage.setTitle("Bar Chart Of First Digit Distribution");
         stage.setScene(scene);
         stage.show();
     }
-
 }
