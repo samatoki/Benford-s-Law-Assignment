@@ -6,9 +6,7 @@
 */
 
 import java.util.Scanner;
-
 import javax.swing.JOptionPane;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -16,7 +14,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -68,7 +65,6 @@ public class BenfordsLaw{
         Scanner sc = new Scanner(System.in);
         System.out.println("Type in the name of the file to read from:");
         String fileName = sc.nextLine();
-
         String line = "";
         
         int[] counters = new int[10];
@@ -105,6 +101,7 @@ public class BenfordsLaw{
     public static void fraudCheck(int[] counters){
         int total = 0;
         double[] frequency = new double[10];
+        Scanner choice = new Scanner(System.in);
 
         for(int i = 1; i <= 9; i++){
             total += counters[i];
@@ -121,13 +118,21 @@ public class BenfordsLaw{
             System.out.println("The data indicates that fraud is highly likely to have occurred.");
         }
 
+        System.out.println("To check the result file, enter 'f'\n"
+            .concat("To check the frequency chart, enter 'c'\n")
+        );
+        String reportCheck = choice.nextLine();
+        if(reportCheck.equals("f")){
+            String filepath = "results.csv";
+            saveRecord(frequency, filepath);
+        }
+        else if(reportCheck.equals("c")){
+            reportResults(frequency);
+        }
         
-        String filepath = "results.csv";
-        //saveRecord(frequency, filepath);
-        reportResults(frequency);
     }
 
-    /*public static void saveRecord(double[] frequency, String filepath){
+    public static void saveRecord(double[] frequency, String filepath){
         String percentage = "%";
         String num = "Number";
         
@@ -149,7 +154,7 @@ public class BenfordsLaw{
         }catch(Exception E){
             JOptionPane.showMessageDialog(null, " Record not Saved");
         }
-    }*/
+    }
 
     public static void reportResults(double[] frequency){
         Stage stage = null;
