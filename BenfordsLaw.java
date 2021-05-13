@@ -49,7 +49,10 @@ public class BenfordsLaw{
 
     public static void loadFile(String userInput) throws FileNotFoundException{
         // Open File
-        String fileName = "sales.csv";
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Type in the name of the file to read from:");
+        String fileName = sc.nextLine();
+
         String line = "";
         int[] counters = new int[10];
 
@@ -62,9 +65,8 @@ public class BenfordsLaw{
             while((line = br.readLine()) != null){
                 String[] dataCollection = line.split(",");
                 if(userInput.equals("3")){
-                    /*System.out.println("postal code: " + dataCollection[0]);
+                    System.out.println("postal code: " + dataCollection[0]);
                     System.out.println("sales: " + dataCollection[1]);
-                    */
                 }
                 for(int i = 1; i <= 9; i++){
                     if (Character.getNumericValue(dataCollection[1].charAt(0)) == i){
@@ -78,14 +80,14 @@ public class BenfordsLaw{
             e.printStackTrace();
         }
         if(userInput.equals("4")){
-            reportResults(counters);
+            fraudCheck(counters);
         }
     }
 
-    public static void reportResults(int[] counters){
+    public static void fraudCheck(int[] counters){
         int total = 0;
         double[] frequency = new double[10];
-        
+
         for(int i = 1; i <= 9; i++){
             total += counters[i];
         }
@@ -102,5 +104,11 @@ public class BenfordsLaw{
         else{
             System.out.println("The data indicates that fraud is highly likely to have occurred.");
         }
+
+        reportResults(frequency);
+    }
+
+    public static void reportResults(double[] frequency){
+
     }
 }
